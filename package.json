@@ -1,5 +1,5 @@
 {
-  "name": "naudiodon",
+  "name": "naudiodon2",
   "version": "2.4.0",
   "description": "Node Stream bindings for PortAudio.",
   "main": "./index.js",
@@ -13,11 +13,11 @@
     "raspberry pi"
   ],
   "bugs": {
-    "url": "https://github.com/Streampunk/naudiodon/issues"
+    "url": "https://github.com/csukuangfj/naudiodon2/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Streampunk/naudiodon.git"
+    "url": "git+https://github.com/csukuangfj/naudiodon2.git"
   },
   "dependencies": {
     "bindings": "^1.5.0",
