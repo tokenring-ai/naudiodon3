@@ -15,7 +15,7 @@
 
 // Plays the sound of a steam train from file 'test.wav'.
 
-var portAudio = require('../index.js');
+var portAudio = require('../index.ts');
 var fs = require('fs');
 var rs = fs.createReadStream('test.wav');
 

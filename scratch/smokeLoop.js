@@ -13,7 +13,7 @@
   limitations under the License.
 */
 
-var portAudio = require('../index.js');
+var portAudio = require('../index.ts');
 
 var sampleRate = 44100;
 

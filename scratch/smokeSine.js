@@ -15,7 +15,7 @@
 
 // Plays a since wave for approx 10 seconds
 
-const portAudio = require('../index.js');
+const portAudio = require('../index.ts');
 
 // create a sine wave lookup table
 var sampleRate = 44100;

@@ -13,7 +13,7 @@
   limitations under the License.
 */
 
-var portAudio = require('../index.js');
+var portAudio = require('../index.ts');
 var fs = require('fs');
 
 //Create a new instance of Audio Input, which is a ReadableStream

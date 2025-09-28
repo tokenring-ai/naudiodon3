@@ -1,4 +1,4 @@
-const portAudio = require('../index.js');
+const portAudio = require('../index.ts');
 
 let inputInstance = null;
 let outputInstance = null;
