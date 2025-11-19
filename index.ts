@@ -13,8 +13,8 @@
   limitations under the License.
 */
 
-import { Readable, Writable, Duplex } from 'stream';
 import bindings from 'bindings';
+import {Duplex, Readable, Writable} from 'stream';
 
 const portAudioBindings = bindings("naudiodon.node");
 
@@ -47,8 +47,11 @@ interface AudioIOResult {
 
 interface AudioIOAddon {
   read(size: number): Promise<AudioIOResult>;
+
   write(chunk: Buffer): Promise<Error | null>;
+
   start(): void;
+
   quit(mode: string): Promise<void>;
 }
 
@@ -68,23 +71,6 @@ class AudioReadableStream extends Readable {
     this.doRead(size);
   }
 
-  private async doRead(size: number): Promise<void> {
-    try {
-      const result = await this.audioIOAddon.read(size);
-      if (result.err) {
-        this.destroy(result.err);
-      } else {
-        if (result.finished) {
-          this.push(null);
-        } else {
-          this.push(result.buf);
-        }
-      }
-    } catch (error) {
-      this.destroy(error instanceof Error ? error : new Error(String(error)));
-    }
-  }
-
   start(): void {
     this.audioIOAddon.start();
   }
@@ -102,6 +88,23 @@ class AudioReadableStream extends Readable {
         callback();
       }
     });
+  }
+
+  private async doRead(size: number): Promise<void> {
+    try {
+      const result = await this.audioIOAddon.read(size);
+      if (result.err) {
+        this.destroy(result.err);
+      } else {
+        if (result.finished) {
+          this.push(null);
+        } else {
+          this.push(result.buf);
+        }
+      }
+    } catch (error) {
+      this.destroy(error instanceof Error ? error : new Error(String(error)));
+    }
   }
 }
 
@@ -121,15 +124,6 @@ class AudioWritableStream extends Writable {
     this.doWrite(chunk, encoding, callback);
   }
 
-  private async doWrite(chunk: Buffer, encoding: BufferEncoding, callback: (error?: Error | null) => void): Promise<void> {
-    try {
-      const error = await this.audioIOAddon.write(chunk);
-      callback(error);
-    } catch (error) {
-      callback(error instanceof Error ? error : new Error(String(error)));
-    }
-  }
-
   start(): void {
     this.audioIOAddon.start();
   }
@@ -147,6 +141,15 @@ class AudioWritableStream extends Writable {
         callback();
       }
     });
+  }
+
+  private async doWrite(chunk: Buffer, encoding: BufferEncoding, callback: (error?: Error | null) => void): Promise<void> {
+    try {
+      const error = await this.audioIOAddon.write(chunk);
+      callback(error);
+    } catch (error) {
+      callback(error instanceof Error ? error : new Error(String(error)));
+    }
   }
 }
 
@@ -168,34 +171,8 @@ class AudioDuplexStream extends Duplex {
     this.doRead(size);
   }
 
-  private async doRead(size: number): Promise<void> {
-    try {
-      const result = await this.audioIOAddon.read(size);
-      if (result.err) {
-        this.destroy(result.err);
-      } else {
-        if (result.finished) {
-          this.push(null);
-        } else {
-          this.push(result.buf);
-        }
-      }
-    } catch (error) {
-      this.destroy(error instanceof Error ? error : new Error(String(error)));
-    }
-  }
-
   _write(chunk: Buffer, encoding: BufferEncoding, callback: (error?: Error | null) => void): void {
     this.doWrite(chunk, encoding, callback);
-  }
-
-  private async doWrite(chunk: Buffer, encoding: BufferEncoding, callback: (error?: Error | null) => void): Promise<void> {
-    try {
-      const error = await this.audioIOAddon.write(chunk);
-      callback(error);
-    } catch (error) {
-      callback(error instanceof Error ? error : new Error(String(error)));
-    }
   }
 
   start(): void {
@@ -216,6 +193,32 @@ class AudioDuplexStream extends Duplex {
       }
     });
   }
+
+  private async doRead(size: number): Promise<void> {
+    try {
+      const result = await this.audioIOAddon.read(size);
+      if (result.err) {
+        this.destroy(result.err);
+      } else {
+        if (result.finished) {
+          this.push(null);
+        } else {
+          this.push(result.buf);
+        }
+      }
+    } catch (error) {
+      this.destroy(error instanceof Error ? error : new Error(String(error)));
+    }
+  }
+
+  private async doWrite(chunk: Buffer, encoding: BufferEncoding, callback: (error?: Error | null) => void): Promise<void> {
+    try {
+      const error = await this.audioIOAddon.write(chunk);
+      callback(error);
+    } catch (error) {
+      callback(error instanceof Error ? error : new Error(String(error)));
+    }
+  }
 }
 
 // Type definitions for the return types
@@ -226,7 +229,10 @@ export type IoStreamDuplex = AudioDuplexStream;
 function AudioIO(options: { inOptions: AudioOptions }): IoStreamRead;
 function AudioIO(options: { outOptions: AudioOptions }): IoStreamWrite;
 function AudioIO(options: { inOptions: AudioOptions, outOptions: AudioOptions }): IoStreamDuplex;
-function AudioIO(options: { inOptions?: AudioOptions, outOptions?: AudioOptions }): IoStreamRead | IoStreamWrite | IoStreamDuplex {
+function AudioIO(options: {
+  inOptions?: AudioOptions,
+  outOptions?: AudioOptions
+}): IoStreamRead | IoStreamWrite | IoStreamDuplex {
   const audioIOAddon: AudioIOAddon = portAudioBindings.create(options);
 
   const readable = 'inOptions' in options && options.inOptions !== undefined;
@@ -277,5 +283,5 @@ function AudioIO(options: { inOptions?: AudioOptions, outOptions?: AudioOptions 
   }
 }
 
-export { AudioIO };
+export {AudioIO};
 export default AudioIO;

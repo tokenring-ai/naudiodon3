@@ -1,79 +1,79 @@
 {
-    "configurations": [
-        {
-            "name": "Mac",
-            "includePath": [
-                "${workspaceRoot}",
-                "${workspaceRoot}/portaudio/include",
-                "/usr/local/include/node"
-            ],
-            "defines": [],
-            "intelliSenseMode": "clang-x64",
-            "browse": {
-                "path": [
-                    "/usr/local/include",
-                    "${workspaceRoot}"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            },
-            "macFrameworkPath": [
-                "/System/Library/Frameworks",
-                "/Library/Frameworks"
-            ]
-        },
-        {
-            "name": "Linux",
-            "includePath": [
-                "/usr/include",
-                "/usr/local/include",
-                "${workspaceRoot}"
-            ],
-            "defines": [],
-            "intelliSenseMode": "clang-x64",
-            "browse": {
-                "path": [
-                    "/usr/include",
-                    "/usr/local/include",
-                    "${workspaceRoot}"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            }
-        },
-        {
-            "name": "Win32",
-            "includePath": [
-                "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include/*",
-                "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/atlmfc/include/*",
-                "C:/Program Files (x86)/Windows Kits/8.1/Include/um",
-                "C:/Program Files (x86)/Windows Kits/10/Include/10.0.10240.0/ucrt",
-                "C:/Program Files (x86)/Windows Kits/8.1/Include/shared",
-                "C:/Program Files (x86)/Windows Kits/8.1/Include/winrt",
-                "C:/Users/simon/AppData/Local/node-gyp/Cache/14.16.0/include/node",
-                "${workspaceRoot}",
-                "${workspaceRoot}/portaudio/include"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE"
-            ],
-            "intelliSenseMode": "msvc-x64",
-            "browse": {
-                "path": [
-                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include/*",
-                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/atlmfc/include/*",
-                    "C:/Program Files (x86)/Windows Kits/8.1/Include/um",
-                    "C:/Program Files (x86)/Windows Kits/8.1/Include/shared",
-                    "C:/Program Files (x86)/Windows Kits/8.1/Include/winrt",
-                    "${workspaceRoot}"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            },
-            "cStandard": "c11",
-            "cppStandard": "c++17"
-        }
+ "configurations": [
+  {
+   "name": "Mac",
+   "includePath": [
+    "${workspaceRoot}",
+    "${workspaceRoot}/portaudio/include",
+    "/usr/local/include/node"
+   ],
+   "defines": [],
+   "intelliSenseMode": "clang-x64",
+   "browse": {
+    "path": [
+     "/usr/local/include",
+     "${workspaceRoot}"
     ],
-    "version": 4
+    "limitSymbolsToIncludedHeaders": true,
+    "databaseFilename": ""
+   },
+   "macFrameworkPath": [
+    "/System/Library/Frameworks",
+    "/Library/Frameworks"
+   ]
+  },
+  {
+   "name": "Linux",
+   "includePath": [
+    "/usr/include",
+    "/usr/local/include",
+    "${workspaceRoot}"
+   ],
+   "defines": [],
+   "intelliSenseMode": "clang-x64",
+   "browse": {
+    "path": [
+     "/usr/include",
+     "/usr/local/include",
+     "${workspaceRoot}"
+    ],
+    "limitSymbolsToIncludedHeaders": true,
+    "databaseFilename": ""
+   }
+  },
+  {
+   "name": "Win32",
+   "includePath": [
+    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include/*",
+    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/atlmfc/include/*",
+    "C:/Program Files (x86)/Windows Kits/8.1/Include/um",
+    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.10240.0/ucrt",
+    "C:/Program Files (x86)/Windows Kits/8.1/Include/shared",
+    "C:/Program Files (x86)/Windows Kits/8.1/Include/winrt",
+    "C:/Users/simon/AppData/Local/node-gyp/Cache/14.16.0/include/node",
+    "${workspaceRoot}",
+    "${workspaceRoot}/portaudio/include"
+   ],
+   "defines": [
+    "_DEBUG",
+    "UNICODE"
+   ],
+   "intelliSenseMode": "msvc-x64",
+   "browse": {
+    "path": [
+     "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include/*",
+     "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/atlmfc/include/*",
+     "C:/Program Files (x86)/Windows Kits/8.1/Include/um",
+     "C:/Program Files (x86)/Windows Kits/8.1/Include/shared",
+     "C:/Program Files (x86)/Windows Kits/8.1/Include/winrt",
+     "${workspaceRoot}"
+    ],
+    "limitSymbolsToIncludedHeaders": true,
+    "databaseFilename": ""
+   },
+   "cStandard": "c11",
+   "cppStandard": "c++17"
+  }
+ ],
+ "version": 4
 }

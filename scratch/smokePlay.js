@@ -24,12 +24,12 @@ var sampleRate = 48000;
 console.log(portAudio.getDevices());
 
 var ao = new portAudio.AudioIO({
-	outOptions: {
-		channelCount: 2,
-		sampleFormat: portAudio.SampleFormat16Bit,
-		sampleRate: sampleRate,
-		deviceId: -1,
-	},
+ outOptions: {
+  channelCount: 2,
+  sampleFormat: portAudio.SampleFormat16Bit,
+  sampleRate: sampleRate,
+  deviceId: -1,
+ },
 });
 
 console.log("ao", ao);
@@ -41,7 +41,7 @@ ao.on("error", console.error);
 rs.pipe(ao);
 
 ao.once("finish", () => {
-	console.log("Finish called.");
+ console.log("Finish called.");
 });
 ao.start();
 

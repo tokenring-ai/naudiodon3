@@ -47,13 +47,13 @@ CFLAGS_CC_Debug := \
 	-fexceptions
 
 INCS_Debug := \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/include/node \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/src \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/openssl/config \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/openssl/openssl/include \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/uv/include \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/zlib \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/v8/include \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/include/node \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/src \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/openssl/config \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/openssl/openssl/include \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/uv/include \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/zlib \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/v8/include \
 	-I$(srcdir)/portaudio/include
 
 DEFS_Release := \
@@ -91,13 +91,13 @@ CFLAGS_CC_Release := \
 	-fexceptions
 
 INCS_Release := \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/include/node \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/src \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/openssl/config \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/openssl/openssl/include \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/uv/include \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/zlib \
-	-I/home/mdierolf/.cache/node-gyp/22.19.0/deps/v8/include \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/include/node \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/src \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/openssl/config \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/openssl/openssl/include \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/uv/include \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/zlib \
+	-I/home/mdierolf/.cache/node-gyp/22.21.0/deps/v8/include \
 	-I$(srcdir)/portaudio/include
 
 OBJS := \

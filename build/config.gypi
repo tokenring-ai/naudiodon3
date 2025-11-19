@@ -83,6 +83,7 @@
     "node_debug_lib": "false",
     "node_enable_d8": "false",
     "node_enable_v8_vtunejit": "false",
+    "node_enable_v8windbg": "false",
     "node_fipsinstall": "false",
     "node_install_corepack": "true",
     "node_install_npm": "true",
@@ -189,6 +190,7 @@
       "lib/internal/encoding.js",
       "lib/internal/error_serdes.js",
       "lib/internal/errors.js",
+      "lib/internal/errors/error_source.js",
       "lib/internal/event_target.js",
       "lib/internal/events/abort_listener.js",
       "lib/internal/events/symbols.js",
@@ -216,6 +218,7 @@
       "lib/internal/http2/util.js",
       "lib/internal/inspector/network.js",
       "lib/internal/inspector/network_http.js",
+      "lib/internal/inspector/network_http2.js",
       "lib/internal/inspector/network_resources.js",
       "lib/internal/inspector/network_undici.js",
       "lib/internal/inspector_async_hook.js",
@@ -492,10 +495,11 @@
     "v8_trace_maps": 0,
     "v8_use_siphash": 1,
     "want_separate_host_toolset": 0,
-    "nodedir": "/home/mdierolf/.cache/node-gyp/22.19.0",
+    "nodedir": "/home/mdierolf/.cache/node-gyp/22.21.0",
     "python": "/usr/bin/python3",
     "standalone_static_library": 1,
     "user_agent": "bun/1.3.1 npm/? node/v24.3.0 linux x64",
+    "color": "always",
     "local_prefix": "/home/mdierolf/gitprojects/tokenring-coder"
   }
 }
