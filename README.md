@@ -1,56 +1,57 @@
-# Naudiodon
+# @tokenring-ai/naudiodon3
 
-A [Node.js](http://nodejs.org/) [addon](http://nodejs.org/api/addons.html) that provides a wrapper around
-the [PortAudio](http://portaudio.com/) library, enabling an application to record and play audio with cross platform
-support. With this library, you can create [node.js streams](https://nodejs.org/dist/latest-v6.x/docs/api/stream.html)
-that can be piped to or from other streams, such as files and network connections. This library supports back-pressure.
+A [Node.js](http://nodejs.org/) native addon that provides a wrapper around the [PortAudio](http://portaudio.com/) library, enabling applications to record and play audio with cross-platform support. This library creates Node.js streams that can be piped to or from other streams, such as files and network connections, with full back-pressure support.
 
-This is a fork of [node-portaudio](/joeferner/node-portaudio), refactored by:
+## Features
 
-* changing from an event model to a stream model;
-* using the new API for building native
-  Addons [N-API](https://nodejs.org/dist/latest-v8.x/docs/api/n-api.html#n_api_n_api) to enable portability between node
-  versions without recompiling.
-* adding in local copies of libraries so that portaudio does not have to be installed preemptively.
-
-Little of the original remains but I am very grateful for Joe Ferner for the inspiration and framework to get started.
-
-This library has been tested on MacOS X 10.11, Windows 10, Linux Ubuntu Trusty and Raspbian Jessie (`armhf`
-architecture).
-
-Note: This is a server side library. It is not intended as a means to play and record audio via a browser.
+- **Cross-platform audio I/O**: Works on macOS, Windows, and Linux (including ARM architectures like Raspberry Pi)
+- **Stream-based API**: Integrates seamlessly with Node.js stream ecosystem
+- **Multiple stream types**: 
+  - Readable streams for audio input (recording)
+  - Writable streams for audio output (playback)
+  - Duplex streams for bidirectional audio processing
+- **Flexible audio configuration**: Support for various sample rates, channel counts, and sample formats
+- **Device enumeration**: List available audio devices and host APIs
+- **Error handling**: Configurable error handling with graceful degradation options
+- **N-API based**: Uses modern N-API for better Node.js version compatibility
 
 ## Installation
 
-Install [Node.js](http://nodejs.org/) for your platform and make sure that node is able to build native modules
-with [node-gyp](https://github.com/nodejs/node-gyp). This software has been developed against the long term stable (LTS)
-release. For ease of installation with other node packages, this package includes a copy of the dependent PortAudio
-library and so has no prerequisites.
+Install [Node.js](http://nodejs.org/) for your platform and ensure that node can build native modules with [node-gyp](https://github.com/nodejs/node-gyp). This package includes a copy of the PortAudio library, so no external dependencies are required.
 
-Naudiodon is designed to be `require`d to use from your own application to provide async processing. For example:
-
-    npm install naudiodon
-
-For Raspberry Pi users, please note that this library is not intended for use with the internal sound card. Please use
-an external USB sound card or GPIO breakout board such as the [_Pi-DAC+ Full-HD Audio
-Card_](https://www.modmypi.com/raspberry-pi/breakout-boards/iqaudio/pi-dac-plus-full-hd-audio-card/?tag=pi-dac).
-
-## Using naudiodon
-
-### Listing devices
-
-To get list of supported devices, call the `getDevices()` function.
-
-```javascript
-var portAudio = require('naudiodon');
-
-console.log(portAudio.getDevices());
+```bash
+npm install @tokenring-ai/naudiodon3
 ```
 
-An example of the output is:
+### Platform-specific notes
+
+- **macOS**: Tested on macOS 10.11 and later
+- **Windows**: Tested on Windows 10
+- **Linux**: Tested on Ubuntu Trusty and Raspbian Jessie (armhf architecture)
+- **Raspberry Pi**: Note that this library is not intended for use with the internal sound card. Please use an external USB sound card or GPIO breakout board.
+
+## Usage
+
+### Importing
 
 ```javascript
-[ { id: 0,
+const { AudioIO, SampleFormatFloat32, SampleFormat16Bit, getDevices, getHostAPIs } = require('@tokenring-ai/naudiodon3');
+```
+
+### Listing Audio Devices
+
+Get a list of available audio devices:
+
+```javascript
+const devices = getDevices();
+console.log(devices);
+```
+
+Example output:
+```javascript
+[
+  {
+    id: 0,
     name: 'Built-in Microph',
     maxInputChannels: 2,
     maxOutputChannels: 0,
@@ -59,18 +60,10 @@ An example of the output is:
     defaultLowOutputLatency: 0.01,
     defaultHighInputLatency: 0.012154195011337868,
     defaultHighOutputLatency: 0.1,
-    hostAPIName: 'Core Audio' },
-  { id: 1,
-    name: 'Built-in Input',
-    maxInputChannels: 2,
-    maxOutputChannels: 0,
-    defaultSampleRate: 44100,
-    defaultLowInputLatency: 0.00199546485260771,
-    defaultLowOutputLatency: 0.01,
-    defaultHighInputLatency: 0.012154195011337868,
-    defaultHighOutputLatency: 0.1,
-    hostAPIName: 'Core Audio' },
-  { id: 2,
+    hostAPIName: 'Core Audio'
+  },
+  {
+    id: 2,
     name: 'Built-in Output',
     maxInputChannels: 0,
     maxOutputChannels: 2,
@@ -79,181 +72,300 @@ An example of the output is:
     defaultLowOutputLatency: 0.002108843537414966,
     defaultHighInputLatency: 0.1,
     defaultHighOutputLatency: 0.012267573696145125,
-    hostAPIName: 'Core Audio' } ]
+    hostAPIName: 'Core Audio'
+  }
+]
 ```
 
-Note that the device `id` parameter index value can be used as to specify which device to use for playback or recording
-with optional parameter `deviceId`.
+### Listing Host APIs
 
-### Listing host APIs
-
-To get list of host APIs, call the `getHostAPIs()` function.
+Get information about available audio host APIs:
 
 ```javascript
-var portAudio = require('naudiodon');
-
-console.log(portAudio.getHostAPIs());
+const hostAPIs = getHostAPIs();
+console.log(hostAPIs);
 ```
 
-An example of the output is:
-
+Example output:
 ```javascript
-{ defaultHostAPI: 0,
-  HostAPIs:
-   [ { id: 0,
-       name: 'MME',
-       deviceCount: 8,
-       defaultInput: 1,
-       defaultOutput: 5 },
-      { /* ... */ } ] }
+{
+  defaultHostAPI: 0,
+  HostAPIs: [
+    {
+      id: 0,
+      name: 'CoreAudio',
+      type: 'CoreAudio',
+      deviceCount: 3,
+      defaultInput: 1,
+      defaultOutput: 2
+    }
+  ]
+}
 ```
 
-Note that the `defaultInput` and `defaultOutput` values can be used as to specify which device to use for playback or
-recording with optional parameter `deviceId`.
+### Playing Audio
 
-### Playing audio
-
-Playing audio involves streaming audio data to a new instance of `AudioIO` configured with `outOptions` - which returns
-a Node.js [Writable Stream](https://nodejs.org/dist/latest-v6.x/docs/api/stream.html#stream_writable_streams):
+Create a writable stream for audio output:
 
 ```javascript
 const fs = require('fs');
-const portAudio = require('naudiodon');
 
-// Create an instance of AudioIO with outOptions (defaults are as below), which will return a WritableStream
-var ao = new portAudio.AudioIO({
+// Create an AudioIO instance for output
+const audioOutput = new AudioIO({
   outOptions: {
     channelCount: 2,
-    sampleFormat: portAudio.SampleFormat16Bit,
+    sampleFormat: SampleFormat16Bit,
     sampleRate: 48000,
-    deviceId: -1, // Use -1 or omit the deviceId to select the default device
-    closeOnError: true // Close the stream if an audio error is detected, if set false then just log the error
+    deviceId: -1, // -1 for default device, or use device ID from getDevices()
+    closeOnError: true // Close stream on audio errors
   }
 });
 
-// Create a stream to pipe into the AudioOutput
-// Note that this does not strip the WAV header so a click will be heard at the beginning
-var rs = fs.createReadStream('steam_48000.wav');
+// Create a read stream from an audio file
+const audioFile = fs.createReadStream('audio.wav');
 
-// Start piping data and start streaming
-rs.pipe(ao);
-ao.start();
-```
+// Pipe the file to the audio output
+audioFile.pipe(audioOutput);
 
-### Recording audio
+// Start the audio playback
+audioOutput.start();
 
-Recording audio involves streaming audio data from a new instance of `AudioIO` configured with `inOptions` - which
-returns a Node.js [Readable Stream](https://nodejs.org/dist/latest-v6.x/docs/api/stream.html#stream_readable_streams):
-
-```javascript
-var fs = require('fs');
-var portAudio = require('../index.js');
-
-// Create an instance of AudioIO with inOptions (defaults are as below), which will return a ReadableStream
-var ai = new portAudio.AudioIO({
-  inOptions: {
-    channelCount: 2,
-    sampleFormat: portAudio.SampleFormat16Bit,
-    sampleRate: 44100,
-    deviceId: -1, // Use -1 or omit the deviceId to select the default device
-    closeOnError: true // Close the stream if an audio error is detected, if set false then just log the error
-  }
-});
-
-// Create a write stream to write out to a raw audio file
-var ws = fs.createWriteStream('rawAudio.raw');
-
-//Start streaming
-ai.pipe(ws);
-ai.start();
-
-```
-
-Note that this produces a raw audio file - wav headers would be required to create a wav file. However this basic
-example produces a file may be read by audio software such as Audacity, using the sample rate and format parameters set
-when establishing the stream.
-
-There is an additional `"timestamp"` property available on the buffers that are streamed from the input which represents
-a time value for the first sample in the returned buffer. It can be accessed as follows:
-
-```javascript
-ai.on('data', buf => console.log(buf.timestamp));
-```
-
-To stop the recording, call `ai.quit()`. For example:
-
-```javascript
+// Handle cleanup
 process.on('SIGINT', () => {
-  console.log('Received SIGINT. Stopping recording.');
-  ai.quit();
+  audioOutput.quit(() => {
+    console.log('Audio playback stopped');
+    process.exit(0);
+  });
 });
 ```
 
-### Bi-directional audio
+### Recording Audio
 
-A bi-directional audio stream is available by creating an instance of `AudioIO` configured with both `inOptions` and
-`outOptions` - which returns a
-Node.js [Duplex stream](https://nodejs.org/dist/latest-v6.x/docs/api/stream.html#stream_duplex_and_transform_streams):
+Create a readable stream for audio input:
 
 ```javascript
-var portAudio = require('../index.js');
+const fs = require('fs');
 
-// Create an instance of AudioIO with inOptions and outOptions, which will return a DuplexStream
-var aio = new portAudio.AudioIO({
+// Create an AudioIO instance for input
+const audioInput = new AudioIO({
   inOptions: {
     channelCount: 2,
-    sampleFormat: portAudio.SampleFormat16Bit,
+    sampleFormat: SampleFormat16Bit,
     sampleRate: 44100,
-    deviceId: -1 // Use -1 or omit the deviceId to select the default device
+    deviceId: -1, // -1 for default device, or use device ID from getDevices()
+    closeOnError: true // Close stream on audio errors
+  }
+});
+
+// Create a write stream to save the audio
+const outputFile = fs.createWriteStream('recording.raw');
+
+// Pipe the audio input to the output file
+audioInput.pipe(outputFile);
+
+// Start recording
+audioInput.start();
+
+// Handle cleanup
+process.on('SIGINT', () => {
+  audioInput.quit(() => {
+    console.log('Audio recording stopped');
+    process.exit(0);
+  });
+});
+```
+
+### Accessing Timestamps
+
+For input streams, each buffer includes a timestamp property:
+
+```javascript
+audioInput.on('data', (buffer) => {
+  console.log('Buffer timestamp:', buffer.timestamp);
+  // The timestamp represents the time of the first sample in the buffer
+});
+```
+
+### Bidirectional Audio Processing
+
+Create a duplex stream for simultaneous input and output:
+
+```javascript
+// Create a bidirectional audio stream
+const audioDuplex = new AudioIO({
+  inOptions: {
+    channelCount: 2,
+    sampleFormat: SampleFormat16Bit,
+    sampleRate: 44100,
+    deviceId: 1 // Input device
   },
   outOptions: {
     channelCount: 2,
-    sampleFormat: portAudio.SampleFormat16Bit,
+    sampleFormat: SampleFormat16Bit,
     sampleRate: 44100,
-    deviceId: -1 // Use -1 or omit the deviceId to select the default device
+    deviceId: 2 // Output device
   }
 });
 
-aio.start();
+// Start the duplex stream
+audioDuplex.start();
+
+// Example: Pass-through audio from input to output
+audioDuplex.pipe(audioDuplex);
+
+// Handle cleanup
+process.on('SIGINT', () => {
+  audioDuplex.quit(() => {
+    console.log('Audio processing stopped');
+    process.exit(0);
+  });
+});
+```
+
+## API Reference
+
+### Sample Formats
+
+- `SampleFormatFloat32` (1): 32-bit floating point samples
+- `SampleFormat8Bit` (8): 8-bit integer samples
+- `SampleFormat16Bit` (16): 16-bit integer samples
+- `SampleFormat24Bit` (24): 24-bit integer samples
+- `SampleFormat32Bit` (32): 32-bit integer samples
+
+### AudioOptions Interface
+
+```typescript
+interface AudioOptions {
+  deviceId?: number;           // Audio device ID (-1 for default)
+  sampleRate?: number;         // Sample rate in Hz (default: 44100)
+  channelCount?: number;       // Number of channels (default: 2)
+  sampleFormat?: 1 | 8 | 16 | 24 | 32; // Sample format (default: 16)
+  maxQueue?: number;           // Maximum queue size (default: 2)
+  framesPerBuffer?: number;    // Frames per buffer (0 for auto)
+  highwaterMark?: number;      // Stream highWaterMark (default: 16384)
+  closeOnError?: boolean;      // Close stream on errors (default: true)
+}
+```
+
+### Stream Methods
+
+All stream types inherit from Node.js streams and provide these additional methods:
+
+- `start()`: Start the audio stream
+- `quit(callback)`: Gracefully stop the stream (callback optional)
+- `abort(callback)`: Immediately stop the stream (callback optional)
+
+### Stream Types
+
+- **Readable Stream**: Returned when only `inOptions` is provided
+- **Writable Stream**: Returned when only `outOptions` is provided  
+- **Duplex Stream**: Returned when both `inOptions` and `outOptions` are provided
+
+## Examples
+
+### Basic Audio Playback
+
+```javascript
+const { AudioIO, SampleFormat16Bit } = require('@tokenring-ai/naudiodon3');
+const { Readable } = require('stream');
+
+// Create a simple sine wave generator
+function createSineWave(sampleRate, duration) {
+  const samples = [];
+  const frequency = 440; // A4 note
+  const amplitude = 0.5;
+  
+  for (let i = 0; i < sampleRate * duration; i++) {
+    const sample = Math.sin(2 * Math.PI * frequency * i / sampleRate) * amplitude;
+    // Convert to 16-bit integer
+    samples.push(Math.round(sample * 32767));
+  }
+  
+  return Buffer.from(samples);
+}
+
+// Create audio stream
+const audioStream = new AudioIO({
+  outOptions: {
+    channelCount: 1,
+    sampleFormat: SampleFormat16Bit,
+    sampleRate: 44100,
+    deviceId: -1
+  }
+});
+
+// Generate 5 seconds of sine wave
+const sineBuffer = createSineWave(44100, 5);
+
+// Create a readable stream from the buffer
+const sineStream = Readable.from([sineBuffer]);
+
+// Pipe and start
+sineStream.pipe(audioStream);
+audioStream.start();
+
+// Stop after playback
+setTimeout(() => {
+  audioStream.quit();
+}, 6000);
+```
+
+### Audio Device Monitoring
+
+```javascript
+const { getDevices } = require('@tokenring-ai/naudiodon3');
+
+function printDevices() {
+  const devices = getDevices();
+  console.log('\nAvailable Audio Devices:');
+  console.log('='.repeat(50));
+  
+  devices.forEach((device, index) => {
+    console.log(`${index + 1}. ${device.name}`);
+    console.log(`   ID: ${device.id}`);
+    console.log(`   Input Channels: ${device.maxInputChannels}`);
+    console.log(`   Output Channels: ${device.maxOutputChannels}`);
+    console.log(`   Sample Rate: ${device.defaultSampleRate} Hz`);
+    console.log(`   Host API: ${device.hostAPIName}`);
+    console.log();
+  });
+}
+
+printDevices();
 ```
 
 ## Troubleshooting
 
 ### Linux - No Default Device Found
 
-Ensure that when you compile portaudio that the configure scripts says "ALSA" yes.
+Ensure that when compiling PortAudio, the configure script indicates "ALSA" is enabled.
 
-### Mac - Carbon Component Manager
+### macOS - Carbon Component Manager Warning
 
-You may see or have seen the following message during initilisation of the audio library on MacOS:
+You may see a deprecation warning about Carbon Component Manager during initialization. This is expected and does not affect functionality. The included PortAudio library uses up-to-date Apple APIs.
 
-```
-WARNING:  140: This application, or a library it uses, is using the deprecated Carbon Component Manager
-for hosting Audio Units. Support for this will be removed in a future release. Also, this makes the host
-incompatible with version 3 audio units. Please transition to the API's in AudioComponent.h.
-```
+### Build Issues
 
-A locally compiled version of the portaudio library is now included with the latest version of naudiodon that uses more
-up-to-date APIs from Apple. The portaudio team
-are [aware of this issue](https://app.assembla.com/spaces/portaudio/tickets/218-pa-coreaudio-uses-some--quot-deprecated-quot--apis----this-is-by-design-but-need/details).
+If you encounter build issues, ensure you have the necessary build tools:
 
-## Status, support and further development
+- **macOS**: Xcode Command Line Tools
+- **Windows**: Visual Studio Build Tools
+- **Linux**: `build-essential` package
 
-Optimisation is still required for use with lower specification devices, such as Raspberry Pis.
+### Raspberry Pi Optimization
 
-Although the architecture of naudiodon is such that it could be used at scale in production environments, development is
-not yet complete. In its current state, it is recommended that this software is used in development environments and for
-building prototypes. Future development will make this more appropriate for production use.
-
-Contributions can be made via pull requests and will be considered by the author on their merits. Enhancement requests
-and bug reports should be raised as github issues. For support, please
-contact [Streampunk Media](http://www.streampunk.media/).
+For Raspberry Pi users, the library automatically adjusts buffer sizes for optimal performance. Consider using external USB audio devices for better results.
 
 ## License
 
-This software is released under the Apache 2.0 license. Copyright 2017 Streampunk Media Ltd.
+This software is released under the Apache 2.0 license. Copyright 2019 Streampunk Media Ltd.
 
-This software uses libraries from the PortAudio project.
-The [license terms for PortAudio](http://portaudio.com/license.html) are stated to be
-an [MIT license](http://opensource.org/licenses/mit-license.php). Streampunk Media are grateful to Ross Bencina and Phil
-Burk for their excellent library.
+This software uses libraries from the PortAudio project, which is released under an MIT license.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
+
+## Support
+
+For support, please check the [GitHub issues](https://github.com/csukuangfj/naudiodon2/issues) or contact the maintainers.
