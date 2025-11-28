@@ -499,6 +499,7 @@
     "python": "/usr/bin/python3",
     "standalone_static_library": 1,
     "user_agent": "bun/1.3.1 npm/? node/v24.3.0 linux x64",
+    "color": "always",
     "local_prefix": "/home/mdierolf/gitprojects/tokenring-coder"
   }
 }
