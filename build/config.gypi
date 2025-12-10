@@ -498,7 +498,7 @@
     "nodedir": "/home/mdierolf/.cache/node-gyp/22.21.0",
     "python": "/usr/bin/python3",
     "standalone_static_library": 1,
-    "user_agent": "bun/1.3.1 npm/? node/v24.3.0 linux x64",
+    "user_agent": "bun/1.3.4 npm/? node/v24.3.0 linux x64",
     "local_prefix": "/home/mdierolf/gitprojects/tokenring"
   }
 }

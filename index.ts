@@ -13,10 +13,11 @@
   limitations under the License.
 */
 
-import bindings from 'bindings';
+//import bindings from 'bindings';
 import {Duplex, Readable, Writable} from 'stream';
 
-const portAudioBindings = bindings("naudiodon.node");
+//const portAudioBindings = bindings("naudiodon.node");
+import portAudioBindings from './build/Release/naudiodon.node';
 
 
 export const SampleFormatFloat32 = 1;
