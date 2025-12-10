@@ -4,7 +4,7 @@ TOOLSET := target
 TARGET := naudiodon
 ### Generated for copy rule.
 $(srcdir)/build/Release/libportaudio.so.2: TOOLSET := $(TOOLSET)
-$(srcdir)/build/Release/libportaudio.so.2: /home/mdierolf/gitprojects/tokenring-coder/pkg/naudiodon3/portaudio/bin/libportaudio.so.2 FORCE_DO_CMD
+$(srcdir)/build/Release/libportaudio.so.2: /home/mdierolf/gitprojects/tokenring/deps/naudiodon3/portaudio/bin/libportaudio.so.2 FORCE_DO_CMD
 	$(call do_cmd,copy)
 
 all_deps += $(srcdir)/build/Release/libportaudio.so.2
@@ -144,19 +144,19 @@ $(binding_gyp_naudiodon_target_copies): |
 LDFLAGS_Debug := \
 	-pthread \
 	-rdynamic \
-	-L/home/mdierolf/gitprojects/tokenring-coder/pkg/naudiodon3/build/Release \
-	-Wl,-rpath,/home/mdierolf/gitprojects/tokenring-coder/pkg/naudiodon3/build/Release \
+	-L/home/mdierolf/gitprojects/tokenring/deps/naudiodon3/build/Release \
+	-Wl,-rpath,/home/mdierolf/gitprojects/tokenring/deps/naudiodon3/build/Release \
 	-m64
 
 LDFLAGS_Release := \
 	-pthread \
 	-rdynamic \
-	-L/home/mdierolf/gitprojects/tokenring-coder/pkg/naudiodon3/build/Release \
-	-Wl,-rpath,/home/mdierolf/gitprojects/tokenring-coder/pkg/naudiodon3/build/Release \
+	-L/home/mdierolf/gitprojects/tokenring/deps/naudiodon3/build/Release \
+	-Wl,-rpath,/home/mdierolf/gitprojects/tokenring/deps/naudiodon3/build/Release \
 	-m64
 
 LIBS := \
-	/home/mdierolf/gitprojects/tokenring-coder/pkg/naudiodon3/build/Release/libportaudio.so.2
+	/home/mdierolf/gitprojects/tokenring/deps/naudiodon3/build/Release/libportaudio.so.2
 
 $(obj).target/naudiodon.node: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
 $(obj).target/naudiodon.node: LIBS := $(LIBS)
