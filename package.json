@@ -1,34 +1,34 @@
 {
- "name": "@tokenring-ai/naudiodon3",
- "version": "2.5.0",
- "description": "Node Stream bindings for PortAudio.",
- "main": "index.ts",
- "keywords": [
-  "portaudio",
-  "audio",
-  "play",
-  "record",
-  "wav",
-  "raspberry pi"
- ],
- "bugs": {
-  "url": "https://github.com/csukuangfj/naudiodon2/issues"
- },
- "repository": {
-  "type": "git",
-  "url": "git+https://github.com/csukuangfj/naudiodon2.git"
- },
- "dependencies": {
-  "bindings": "^1.5.0"
- },
- "devDependencies": {
-  "@types/node": "^24.10.1",
-  "@types/bindings": "^1.5.5"
- },
- "author": "Streampunk Media Ltd",
- "license": "Apache-2.0",
- "scripts": {
-  "install": "node-gyp rebuild"
- },
- "gypfile": true
+  "name": "@tokenring-ai/naudiodon3",
+  "version": "2.5.0",
+  "description": "Node Stream bindings for PortAudio.",
+  "main": "index.ts",
+  "keywords": [
+    "portaudio",
+    "audio",
+    "play",
+    "record",
+    "wav",
+    "raspberry pi"
+  ],
+  "bugs": {
+    "url": "https://github.com/csukuangfj/naudiodon2/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csukuangfj/naudiodon2.git"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0"
+  },
+  "devDependencies": {
+    "@types/node": ">=25",
+    "@types/bindings": "^1.5.5"
+  },
+  "author": "Streampunk Media Ltd",
+  "license": "Apache-2.0",
+  "scripts": {
+    "install": "node-gyp rebuild"
+  },
+  "gypfile": true
 }
