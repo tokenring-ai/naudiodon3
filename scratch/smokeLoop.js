@@ -13,30 +13,30 @@
   limitations under the License.
 */
 
-var portAudio = require("../index.ts");
+const portAudio = require("../index.ts");
 
-var sampleRate = 44100;
+const sampleRate = 44100;
 
 // console.log(portAudio.getDevices());
 
-var ai = new portAudio.AudioIO({
- inOptions: {
-  channelCount: 2,
-  sampleFormat: portAudio.SampleFormat16Bit,
-  sampleRate: sampleRate,
-  deviceId: 2,
-  closeOnError: false,
- },
+const ai = new portAudio.AudioIO({
+  inOptions: {
+    channelCount: 2,
+    sampleFormat: portAudio.SampleFormat16Bit,
+    sampleRate: sampleRate,
+    deviceId: 2,
+    closeOnError: false,
+  },
 });
 
-var ao = new portAudio.AudioIO({
- outOptions: {
-  channelCount: 2,
-  sampleFormat: portAudio.SampleFormat16Bit,
-  sampleRate: sampleRate,
-  deviceId: -1,
-  closeOnError: false,
- },
+const ao = new portAudio.AudioIO({
+  outOptions: {
+    channelCount: 2,
+    sampleFormat: portAudio.SampleFormat16Bit,
+    sampleRate: sampleRate,
+    deviceId: -1,
+    closeOnError: false,
+  },
 });
 
 ai.pipe(ao);

@@ -18,27 +18,27 @@
 const portAudio = require("../index.ts");
 
 // create a sine wave lookup table
-var sampleRate = 44100;
-var tableSize = 200;
-var buffer = Buffer.allocUnsafe(tableSize * 4);
-for (var i = 0; i < tableSize * 4; i++) {
+const sampleRate = 44100;
+const tableSize = 200;
+const buffer = Buffer.allocUnsafe(tableSize * 4);
+for (let i = 0; i < tableSize * 4; i++) {
  buffer[i] = Math.sin((i / tableSize) * 3.1415 * 2.0) * 127;
 }
 
-var ao = new portAudio.AudioIO({
- outOptions: {
-  channelCount: 1,
-  sampleFormat: portAudio.SampleFormat8Bit,
-  sampleRate: sampleRate,
-  deviceId: -1,
- },
+const ao = new portAudio.AudioIO({
+  outOptions: {
+    channelCount: 1,
+    sampleFormat: portAudio.SampleFormat8Bit,
+    sampleRate: sampleRate,
+    deviceId: -1,
+  },
 });
 
 function tenSecondsIsh(writer, data, callback) {
  this.i = 552;
  const write = () => {
-  var ok = true;
-  do {
+   let ok = true;
+   do {
    this.i -= 1;
    if (this.i === 0) {
     // last time!

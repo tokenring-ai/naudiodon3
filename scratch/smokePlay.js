@@ -15,21 +15,21 @@
 
 // Plays the sound of a steam train from file 'test.wav'.
 
-var portAudio = require("../index.ts");
-var fs = require("fs");
-var rs = fs.createReadStream("test.wav");
+const portAudio = require("../index.ts");
+const fs = require("fs");
+const rs = fs.createReadStream("test.wav");
 
-var sampleRate = 48000;
+const sampleRate = 48000;
 
 console.log(portAudio.getDevices());
 
-var ao = new portAudio.AudioIO({
- outOptions: {
-  channelCount: 2,
-  sampleFormat: portAudio.SampleFormat16Bit,
-  sampleRate: sampleRate,
-  deviceId: -1,
- },
+const ao = new portAudio.AudioIO({
+  outOptions: {
+    channelCount: 2,
+    sampleFormat: portAudio.SampleFormat16Bit,
+    sampleRate: sampleRate,
+    deviceId: -1,
+  },
 });
 
 console.log("ao", ao);

@@ -13,21 +13,21 @@
   limitations under the License.
 */
 
-var portAudio = require("../index.ts");
-var fs = require("fs");
+const portAudio = require("../index.ts");
+const fs = require("fs");
 
 //Create a new instance of Audio Input, which is a ReadableStream
-var ai = new portAudio.AudioIO({
- inOptions: {
-  channelCount: 2,
-  sampleFormat: portAudio.SampleFormat16Bit,
-  sampleRate: 44100,
-  deviceId: 1,
- },
+const ai = new portAudio.AudioIO({
+  inOptions: {
+    channelCount: 2,
+    sampleFormat: portAudio.SampleFormat16Bit,
+    sampleRate: 44100,
+    deviceId: 1,
+  },
 });
 
 //Create a write stream to write out to a raw audio file
-var ws = fs.createWriteStream("rawAudio.raw");
+const ws = fs.createWriteStream("rawAudio.raw");
 
 //Start streaming
 ai.pipe(ws);
