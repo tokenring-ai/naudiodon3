@@ -14,7 +14,7 @@
 */
 
 //import bindings from 'bindings';
-import {Duplex, Readable, Writable} from 'stream';
+import {Duplex, Readable, Writable} from 'node:stream';
 
 const portAudioBindings = require('./build/Release/naudiodon.node');
 
@@ -143,7 +143,7 @@ class AudioWritableStream extends Writable {
     });
   }
 
-  private async doWrite(chunk: Buffer, encoding: BufferEncoding, callback: (error?: Error | null) => void): Promise<void> {
+  private async doWrite(chunk: Buffer, _encoding: BufferEncoding, callback: (error?: Error | null) => void): Promise<void> {
     try {
       const error = await this.audioIOAddon.write(chunk);
       callback(error);
@@ -211,7 +211,7 @@ class AudioDuplexStream extends Duplex {
     }
   }
 
-  private async doWrite(chunk: Buffer, encoding: BufferEncoding, callback: (error?: Error | null) => void): Promise<void> {
+  private async doWrite(chunk: Buffer, _encoding: BufferEncoding, callback: (error?: Error | null) => void): Promise<void> {
     try {
       const error = await this.audioIOAddon.write(chunk);
       callback(error);
@@ -241,7 +241,7 @@ function AudioIO(options: {
   if (readable && writable) {
     const stream = new AudioDuplexStream(audioIOAddon, options.inOptions!, options.outOptions!);
 
-    stream.on('close', async (): Promise<void> => {
+    stream.on('close', () => {
       stream.emit('closed');
     });
 
@@ -256,7 +256,7 @@ function AudioIO(options: {
   } else if (readable) {
     const stream = new AudioReadableStream(audioIOAddon, options.inOptions!);
 
-    stream.on('close', async (): Promise<void> => {
+    stream.on('close', () => {
       stream.emit('closed');
     });
 
@@ -266,7 +266,7 @@ function AudioIO(options: {
   } else if (writable) {
     const stream = new AudioWritableStream(audioIOAddon, options.outOptions!);
 
-    stream.on('close', async (): Promise<void> => {
+    stream.on('close', () => {
       stream.emit('closed');
     });
 

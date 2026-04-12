@@ -22,7 +22,7 @@
     "bindings": "^1.5.0"
   },
   "devDependencies": {
-    "@types/node": ">=25",
+    "@types/node": ">=25.5.2",
     "@types/bindings": "^1.5.5"
   },
   "author": "Streampunk Media Ltd",
