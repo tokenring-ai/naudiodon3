@@ -102,7 +102,7 @@ class AudioReadableStream extends Readable {
           this.push(result.buf);
         }
       }
-    } catch (error) {
+    } catch (error: unknown) {
       this.destroy(error instanceof Error ? error : new Error(String(error)));
     }
   }
@@ -147,7 +147,7 @@ class AudioWritableStream extends Writable {
     try {
       const error = await this.audioIOAddon.write(chunk);
       callback(error);
-    } catch (error) {
+    } catch (error: unknown) {
       callback(error instanceof Error ? error : new Error(String(error)));
     }
   }
@@ -206,7 +206,7 @@ class AudioDuplexStream extends Duplex {
           this.push(result.buf);
         }
       }
-    } catch (error) {
+    } catch (error: unknown) {
       this.destroy(error instanceof Error ? error : new Error(String(error)));
     }
   }
@@ -215,7 +215,7 @@ class AudioDuplexStream extends Duplex {
     try {
       const error = await this.audioIOAddon.write(chunk);
       callback(error);
-    } catch (error) {
+    } catch (error: unknown) {
       callback(error instanceof Error ? error : new Error(String(error)));
     }
   }
