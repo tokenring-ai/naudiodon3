@@ -29,19 +29,19 @@ export const getDevices = portAudioBindings.getDevices;
 export const getHostAPIs = portAudioBindings.getHostAPIs;
 
 interface AudioOptions {
-  deviceId?: number;
-  sampleRate?: number;
-  channelCount?: number;
+  deviceId?: number | undefined;
+  sampleRate?: number | undefined;
+  channelCount?: number | undefined;
   sampleFormat?: 1 | 8 | 16 | 24 | 32;
-  maxQueue?: number;
-  framesPerBuffer?: number;
-  highwaterMark?: number;
-  closeOnError?: boolean;
+  maxQueue?: number | undefined;
+  framesPerBuffer?: number | undefined;
+  highwaterMark?: number | undefined;
+  closeOnError?: boolean | undefined;
 }
 
 interface AudioIOResult {
   err?: Error;
-  finished?: boolean;
+  finished?: boolean | undefined;
   buf?: Buffer;
 }
 
