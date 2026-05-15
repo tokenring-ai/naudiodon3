@@ -103,7 +103,7 @@ class AudioReadableStream extends Readable {
         }
       }
     } catch (error: unknown) {
-      this.destroy(error instanceof Error ? error : new Error(String(error)));
+      this.destroy(Error.isError(error) ? error : new Error(String(error)));
     }
   }
 }
@@ -148,7 +148,7 @@ class AudioWritableStream extends Writable {
       const error = await this.audioIOAddon.write(chunk);
       callback(error);
     } catch (error: unknown) {
-      callback(error instanceof Error ? error : new Error(String(error)));
+      callback(Error.isError(error) ? error : new Error(String(error)));
     }
   }
 }
@@ -207,7 +207,7 @@ class AudioDuplexStream extends Duplex {
         }
       }
     } catch (error: unknown) {
-      this.destroy(error instanceof Error ? error : new Error(String(error)));
+      this.destroy(Error.isError(error) ? error : new Error(String(error)));
     }
   }
 
@@ -216,7 +216,7 @@ class AudioDuplexStream extends Duplex {
       const error = await this.audioIOAddon.write(chunk);
       callback(error);
     } catch (error: unknown) {
-      callback(error instanceof Error ? error : new Error(String(error)));
+      callback(Error.isError(error) ? error : new Error(String(error)));
     }
   }
 }
