@@ -3,3 +3,4 @@
 /.vscode
 test.wav
 rawAudio.raw
+build/
