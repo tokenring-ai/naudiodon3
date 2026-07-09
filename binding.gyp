@@ -71,6 +71,7 @@
         [
           'OS=="linux"', {
             "conditions": [
+              # 32-bit ARM (armhf / Raspberry Pi): vendored prebuilt
               ['target_arch=="arm"', {
                 "cflags_cc!": [
                   "-fno-rtti",
@@ -82,7 +83,7 @@
                 ],
                 "link_settings": {
                   "libraries": [
-                    "<@(module_root_dir)/build/Release/libportaudio.so.2" 
+                    "<@(module_root_dir)/build/Release/libportaudio.so.2"
                   ],
                   "ldflags": [
                     "-L<@(module_root_dir)/build/Release",
@@ -97,23 +98,42 @@
                     ]
                   }
                 ]
-              },
-              { # ia32 or x64
+              }],
+              # aarch64 / linux-arm64: no vendored .so in-repo; link system PortAudio
+              # (install libportaudio2 + portaudio19-dev). Same dependency model as
+              # packaging/deb and packaging/docker.
+              ['target_arch=="arm64"', {
                 "cflags_cc!": [
                   "-fno-rtti",
                   "-fno-exceptions"
-                 ],
-                 "cflags_cc": [
-                   "-std=c++11",
-                   "-fexceptions"
-                 ],
+                ],
+                "cflags_cc": [
+                  "-std=c++11",
+                  "-fexceptions"
+                ],
+                "link_settings": {
+                  "libraries": [
+                    "-lportaudio"
+                  ]
+                }
+              }],
+              # ia32 or x64: vendored prebuilt
+              ['target_arch=="ia32" or target_arch=="x64"', {
+                "cflags_cc!": [
+                  "-fno-rtti",
+                  "-fno-exceptions"
+                ],
+                "cflags_cc": [
+                  "-std=c++11",
+                  "-fexceptions"
+                ],
                 "link_settings": {
                   "libraries": [
                     "<@(module_root_dir)/build/Release/libportaudio.so.2"
                   ],
                   "ldflags": [
-                  "-L<@(module_root_dir)/build/Release",
-                  "-Wl,-rpath,<@(module_root_dir)/build/Release"
+                    "-L<@(module_root_dir)/build/Release",
+                    "-Wl,-rpath,<@(module_root_dir)/build/Release"
                   ]
                 },
                 "copies": [
